@@ -112,7 +112,7 @@ class ControllerResolver implements ControllerResolverInterface
         foreach ($parameters as $param) {
             if (array_key_exists($param->name, $attributes)) {
                 $arguments[] = $attributes[$param->name];
-            } elseif ($param->getClass() && $param->getClass()->isInstance($request)) {
+            } elseif (((string) $param->getType()) && is_a($request, (string) $param->getType())) {
                 $arguments[] = $request;
             } elseif ($param->isDefaultValueAvailable()) {
                 $arguments[] = $param->getDefaultValue();
