@@ -165,11 +165,16 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
 
     public function serialize()
     {
+        return $this->serialize($this->__serialize());
+    }
+
+    public function __serialize()
+    {
         if ($this->clonesCount !== $this->clonesIndex) {
-            return 'a:0:{}';
+            return [];
         }
 
-        $ser = serialize($this->data);
+        $ser = $this->data;
         $this->data = array();
         $this->dataCount = 0;
         $this->isCollected = true;
@@ -183,6 +188,13 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
     public function unserialize($data)
     {
         parent::unserialize($data);
+        $this->dataCount = count($this->data);
+        self::__construct($this->stopwatch);
+    }
+
+    public function __unserialize($data)
+    {
+        parent::__unserialize($data);
         $this->dataCount = count($this->data);
         self::__construct($this->stopwatch);
     }

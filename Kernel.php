@@ -773,12 +773,22 @@ abstract class Kernel implements KernelInterface, TerminableInterface
 
     public function serialize()
     {
-        return serialize(array($this->environment, $this->debug));
+        return serialize($this->__serialize());
+    }
+
+    public function __serialize()
+    {
+        return array($this->environment, $this->debug);
     }
 
     public function unserialize($data)
     {
-        list($environment, $debug) = unserialize($data);
+        $this->__unserialize(unserialize($data));
+    }
+
+    public function __unserialize($data)
+    {
+        list($environment, $debug) = $data;
 
         $this->__construct($environment, $debug);
     }

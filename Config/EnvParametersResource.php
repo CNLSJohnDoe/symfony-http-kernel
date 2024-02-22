@@ -67,13 +67,21 @@ class EnvParametersResource implements ResourceInterface, \Serializable
 
     public function serialize()
     {
-        return serialize(array('prefix' => $this->prefix, 'variables' => $this->variables));
+        return serialize($this->__serialize());
+    }
+
+    public function __serialize()
+    {
+        return array('prefix' => $this->prefix, 'variables' => $this->variables);
     }
 
     public function unserialize($serialized)
     {
-        $unserialized = unserialize($serialized);
+        $this->__unserialize(unserialize($serialized));
+    }
 
+    public function __unserialize($unserialized)
+    {
         $this->prefix = $unserialized['prefix'];
         $this->variables = $unserialized['variables'];
     }

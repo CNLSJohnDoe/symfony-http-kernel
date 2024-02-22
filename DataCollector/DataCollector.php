@@ -32,12 +32,22 @@ abstract class DataCollector implements DataCollectorInterface, \Serializable
 
     public function serialize()
     {
-        return serialize($this->data);
+        return serialize($this->__serialize());
+    }
+
+    public function __serialize()
+    {
+        return $this->data;
     }
 
     public function unserialize($data)
     {
-        $this->data = unserialize($data);
+        $this->__unserialize(unserialize($data));
+    }
+
+    public function __unserialize($data)
+    {
+        $this->data = $data;
     }
 
     /**
