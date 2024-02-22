@@ -187,9 +187,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
 
     public function unserialize($data)
     {
-        parent::unserialize($data);
-        $this->dataCount = count($this->data);
-        self::__construct($this->stopwatch);
+        $this->__unserialize($data);
     }
 
     public function __unserialize($data)
