@@ -241,11 +241,11 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
             $h = headers_list();
             $i = count($h);
             array_unshift($h, 'Content-Type: '.ini_get('default_mimetype'));
-            while (0 !== stripos($h[$i], 'Content-Type:')) {
+            while (0 !== stripos((string) $h[$i], 'Content-Type:')) {
                 --$i;
             }
 
-            if ('cli' !== PHP_SAPI && stripos($h[$i], 'html')) {
+            if ('cli' !== PHP_SAPI && stripos((string) $h[$i], 'html')) {
                 $this->dumper = new HtmlDumper('php://output', $this->charset);
             } else {
                 $this->dumper = new CliDumper('php://output', $this->charset);
